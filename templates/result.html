@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<title> Shopping - ticket </title>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/ticket.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div id="ticket">
+	{% if pannier['error'] %}
+	<div class="error">
+		<p> Une erreur dans vos articles est survenue </p>
+	</div>
+	{% else %}
+		{% if pannier['prod'] %}
+			<div class="title">
+				<p> Vos achats </p>
+			</div>
+			<div id="products">
+				<div class="show_prod">
+					<div class="qt">
+						<p> Qt. </p>
+					</div>
+					<div class="name">
+						<p> Article </p>
+					</div>
+					<div class="prix">
+						<p> P. Unit. </p>
+					</div>
+					<div class="prix">
+						<p> Total </p>
+					</div>
+
+				</div>
+				{% for p in pannier['prod'] %}
+					<div class="show_prod">
+						<div class="qt">
+							<p> {{ pannier['prod'][p]['qt'] }} </p>
+						</div>
+						<div class="name">
+							<p> {{ pannier['prod'][p]['nom'] }} </p>
+						</div>
+						<div class="prix">
+							<p> {{ pannier['prod'][p]['prix'] }} </p>
+						</div>
+						<div class="prix">
+							<p> {{ pannier['prod'][p]['t_prod'] }} </p>
+						</div>
+					</div>
+				{% endfor %}
+			<div class="total">
+				<p> Total achats: {{ pannier['total_prod'] }} €</p>
+			</div>
+			</div>
+			{% else %}
+			<div class="error">
+				<p> Vous avez aucun article dans votre pannier </p>
+			</div>
+			{%endif%}
+			{% if pannier['prom'] %}
+			<div class="title">
+				<p> Reductions </p>
+			</div>
+			<div id="products">
+				{% for p in pannier['prom'] %}
+					<div class="show_prod">
+						<div class="qt">
+							<p> {{ pannier['prom'][p]['qt'] }} </p>
+						</div>
+						<div class="name">
+							<p> {{ pannier['prom'][p]['nom'] }} </p>
+						</div>
+						<div class="prix">
+							<p> {{ pannier['prom'][p]['prix'] }} </p>
+						</div>
+						<div class="prix">
+							<p> {{ pannier['prom'][p]['t_prod'] }} </p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="total">
+				<p> Total des reductions: {{ pannier['total_prom'] }} €</p>
+			</div>
+			{%endif%}
+			<div class="big_total">
+				<p> Total : {{ pannier['total'] }} € </p>
+			</div>
+	{% endif %}
+</div>
+{% endblock %}

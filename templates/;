@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/index.css') }}"/>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>  
+	<title> Shopping </title>
+{% endblock %}
+
+{% block content %}
+	{%if products %}
+		<div class=nav_bar>
+			<form id="form" action="/calculate/" method="POST"><input id="form_text" type="text" value="ii"></form>
+			<button class="pannier" onclick='validate_pannier();'>Pannier</button>
+		</div>
+		<div class=product_list>
+					{% for p in products %}
+			<div id="{{ p.id  }}" class=product onclick='add_product(this);'>
+					<div class=img_div>
+						<img src="{{ p.image }}" alt="Product Image"/>
+					</div>
+					<div class=product_details>
+						<p class="p_name">{{ p.name }}</p>
+						<p class="s_{{ p.id }}"> {{ p.stock }} en stock</p>
+					</div>
+					<div class="product_description">
+						<p class="p_description"> Description </p>	
+						<p>{{ p.description }} </p>
+					</div>
+					<div class="product_price">
+						<p class="p_inline"> Prix a l'unitee : </p>
+						<p class="p_inline"> {{ p.prix}} €</p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p> Sorry there are no products in our shop :/</p>
+		<p> /setup to generate some products </p>
+	{% endif %}
+{% endblock %}
